@@ -6,7 +6,7 @@ from network import Network
 def train():
     network = Network()
     game = Game()
-    while True:
+    while network.nGames < 2100:
         state = network.getState(game)
         move = network.getAction(state)
 

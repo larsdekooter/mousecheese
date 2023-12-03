@@ -125,20 +125,31 @@ class Network:
         self.trainer.trainStep(state, action, reward, nextState, done)
 
     def getAction(self, state):
-        self.decayStep+=1
-        epsilon = self.minEpsilon + (self.maxEpsilon - self.minEpsilon) * np.exp(
-            -self.decayRate * self.decayStep
-        )
-        final_move = [0,0,0,0]
-        if np.random.rand() < epsilon:
-            move = random.randint(0,3)
-            final_move[move] = 1
-            self.randomSteps +=1
+        if self.nGames < 2000:
+            self.decayStep+=1
+            epsilon = self.minEpsilon + (self.maxEpsilon - self.minEpsilon) * np.exp(
+                -self.decayRate * self.decayStep
+            )
+            final_move = [0,0,0,0]
+            if np.random.rand() < epsilon:
+                move = random.randint(0,3)
+                final_move[move] = 1
+                self.randomSteps +=1
+            else:
+                state0 = torch.tensor(state, dtype=torch.float)
+                prediction = self.model(state0)
+                move = torch.argmax(prediction).item()
+                final_move[move] = 1
+                self.aiSteps += 1
+            return final_move
         else:
-            state0 = torch.tensor(state, dtype=torch.float)
-            prediction = self.model(state0)
-            move = torch.argmax(prediction).item()
+            self.model.eval()
+            with torch.no_grad():
+                qValues = self.model(state)
+            
+            qValuesnp = qValues.numpy()
+            print("QValues: ", qValuesnp)
+            action = torch.argmax(qValues).item()
+            final_move = [0,0,0,0]
             final_move[move] = 1
-            self.aiSteps += 1
-        return final_move
-        
+            return final_move
