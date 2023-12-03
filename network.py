@@ -18,9 +18,9 @@ class LinearQnet(nn.Module):
         self.layer3 = nn.Linear(hiddenSize, outputSize)
     
     def forward(self, x):
-        x = F.relu(self.layer1(x))
-        x = F.relu(self.layer2(x))
-        return self.layer3(x)
+        x = F.sigmoid(self.layer1(x))
+        x = F.tanh(self.layer2(x))
+        return F.sigmoid(self.layer3(x))
 
     def save(self, filename="model.pth"):
         modelFolderPath = './model'
