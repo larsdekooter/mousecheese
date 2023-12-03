@@ -2,6 +2,7 @@ import pygame
 from data import catPositions, cheeseReward, getDistanceReward, rewardNerf, getEfficiencyPenalty
 from mouse import Mouse
 import math
+import time
 
 class Game:
     def __init__(self):
@@ -13,6 +14,7 @@ class Game:
         self.cheeseimg = pygame.transform.scale(pygame.image.load("OIP.jpg"), (100, 100))
         self.font = pygame.font.Font("arial.ttf", 32)
         self.distances = []
+        self.gameTime = time.time()
 
     def reset(self):
         self.mouse = Mouse(0,0)

@@ -1,6 +1,6 @@
 from game import Game
 import pygame
-from time import sleep
+from time import time
 from network import Network
 
 def train():
@@ -18,6 +18,7 @@ def train():
 
 
         if done:
+            gameTime = time() - game.gameTime
             randomSteps, aiSteps = network.randomSteps, network.aiSteps
             network.aiSteps = 0
             network.randomSteps = 0
@@ -26,9 +27,10 @@ def train():
             network.nGames+=1
             network.trainLongMemory()
 
-            print("game", network.nGames, "won", won, "x", x, "y", y, '%', aiSteps / (aiSteps+randomSteps) * 100, "Total steps", network.decayStep)
+            print("game", network.nGames, "won", won, "x", x, "y", y, '%', round(aiSteps / (aiSteps+randomSteps) * 100, 2), "Total steps", network.decayStep, "time", round(gameTime, 2), "s")
             if won or network.nGames % 100 == 0:
                 network.model.save()
+            game.gameTime = time()
 
 
 def getMove():
