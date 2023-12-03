@@ -18,11 +18,12 @@ def train():
 
 
         if done:
+            x,y = game.mouse.x, game.mouse.y
             game.reset()
             network.nGames+=1
             network.trainLongMemory()
 
-            print("game", network.nGames, "won", won)
+            print("game", network.nGames, "won", won, "x, y", x,y)
             if won:
                 network.model.save()
 
