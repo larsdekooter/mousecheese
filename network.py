@@ -79,6 +79,8 @@ class Network:
         self.minEpsilon = data.minEpsilon
         self.decayRate = data.decayRate
         self.decayStep = 0
+        self.aiSteps = 0
+        self.randomSteps = 0
 
     def getState(self, game: Game):
         distanceToCheese = game.getDistanceToCheese()
@@ -131,10 +133,12 @@ class Network:
         if np.random.rand() < epsilon:
             move = random.randint(0,3)
             final_move[move] = 1
+            self.randomSteps +=1
         else:
             state0 = torch.tensor(state, dtype=torch.float)
             prediction = self.model(state0)
             move = torch.argmax(prediction).item()
             final_move[move] = 1
+            self.aiSteps += 1
         return final_move
         

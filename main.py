@@ -18,13 +18,16 @@ def train():
 
 
         if done:
+            randomSteps, aiSteps = network.randomSteps, network.aiSteps
+            network.aiSteps = 0
+            network.randomSteps = 0
             x,y = game.mouse.x, game.mouse.y
             game.reset()
             network.nGames+=1
             network.trainLongMemory()
 
-            print("game", network.nGames, "won", won, "x, y", x,y)
-            if won:
+            print("game", network.nGames, "won", won, "x", x, "y", y, '%', aiSteps / (aiSteps+randomSteps) * 100, "Total steps", network.decayStep)
+            if won or network.nGames % 100 == 0:
                 network.model.save()
 
 
