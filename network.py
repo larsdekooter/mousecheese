@@ -107,7 +107,7 @@ class Network:
             distanceToCheese 
         ]
 
-        return  np.array(state, dtype=int)
+        return torch.tensor(state, dtype=torch.int)
     
     def remember(self, state, action, reward, nextState, done):
         self.memory.append((state, action, reward, nextState, done))
