@@ -18,6 +18,7 @@ class LinearQnet(nn.Module):
         self.layer3 = nn.Linear(hiddenSize, outputSize)
     
     def forward(self, x):
+        x = torch.tensor(x, dtype=torch.int)
         x = F.sigmoid(self.layer1(x))
         x = F.tanh(self.layer2(x))
         return F.sigmoid(self.layer3(x))
@@ -107,7 +108,7 @@ class Network:
             distanceToCheese 
         ]
 
-        return torch.tensor([np.array(state)], dtype=torch.int)
+        return np.array(state, dtype=int)
     
     def remember(self, state, action, reward, nextState, done):
         self.memory.append((state, action, reward, nextState, done))
