@@ -82,6 +82,7 @@ class Network:
         self.decayStep = 0
         self.aiSteps = 0
         self.randomSteps = 0
+        self.moves = [0,0,0,0]
 
     def getState(self, game: Game):
         distanceToCheese = game.getDistanceToCheese()
@@ -149,8 +150,9 @@ class Network:
                 qValues = self.model(state)
             
             qValuesnp = qValues.numpy()
-            print("QValues: ", qValuesnp)
+            #print("QValues: ", qValuesnp)
             action = torch.argmax(qValues).item()
             final_move = [0,0,0,0]
             final_move[action] = 1
+            self.moves[action] += 1
             return final_move
