@@ -24,6 +24,8 @@ def train():
             totalMoves = 0
             for x in moves:
                 totalMoves += x
+            if totalMoves == 0:
+                totalMoves = 1
             gameTime = time() - game.gameTime
             randomSteps, aiSteps = network.randomSteps, network.aiSteps
             network.aiSteps = 0
