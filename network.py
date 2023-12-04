@@ -152,5 +152,5 @@ class Network:
             print("QValues: ", qValuesnp)
             action = torch.argmax(qValues).item()
             final_move = [0,0,0,0]
-            final_move[move] = 1
+            final_move[action] = 1
             return final_move
