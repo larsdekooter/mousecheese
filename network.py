@@ -18,7 +18,7 @@ class LinearQnet(nn.Module):
         self.layer3 = nn.Linear(hiddenSize, outputSize)
     
     def forward(self, x):
-        x = torch.tensor(x, dtype=torch.int)
+        x = torch.tensor(x, dtype=torch.float32)
         x = F.sigmoid(self.layer1(x))
         x = F.tanh(self.layer2(x))
         return F.sigmoid(self.layer3(x))
