@@ -107,7 +107,7 @@ class Network:
             distanceToCheese 
         ]
 
-        return np.array(state, dtype=int)
+        return  np.array(state, dtype=int)
     
     def remember(self, state, action, reward, nextState, done):
         self.memory.append((state, action, reward, nextState, done))
@@ -125,7 +125,7 @@ class Network:
         self.trainer.trainStep(state, action, reward, nextState, done)
 
     def getAction(self, state):
-        if self.nGames < 2000:
+        if self.nGames < data.testLength:
             self.decayStep+=1
             epsilon = self.minEpsilon + (self.maxEpsilon - self.minEpsilon) * np.exp(
                 -self.decayRate * self.decayStep

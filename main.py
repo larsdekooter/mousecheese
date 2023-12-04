@@ -2,11 +2,12 @@ from game import Game
 import pygame
 from time import time
 from network import Network
+from data import testLength
 
 def train():
     network = Network()
     game = Game()
-    while network.nGames < 2100:
+    while network.nGames < testLength + 100:
         state = network.getState(game)
         move = network.getAction(state)
 
