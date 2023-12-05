@@ -10,7 +10,7 @@ minEpsilon = 0.01
 decayRate = 0.0001
 batchSize = 64  # Adjusted batch size for efficiency
 random = 200
-testLength = 10
+testLength = 1000
 
 def getDistanceReward(distance):
     return 1.02 ** -distance  # Slightly increased reward decay

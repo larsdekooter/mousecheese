@@ -155,4 +155,5 @@ class Network:
             final_move = [0,0,0,0]
             final_move[action] = 1
             self.moves[action] += 1
+            self.aiSteps +=1
             return final_move
