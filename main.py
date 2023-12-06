@@ -3,6 +3,16 @@ import pygame
 from time import time
 from network import Network
 from data import testLength
+import sys
+import traceback
+from datetime import datetime
+
+def err(type, value, tb):
+    print("Execution date time: {}".format(datetime.now()))
+    print(traceback.print_tb(tb))
+    print(type, ": ", value)
+
+sys.excepthook = err
 
 def train():
     network = Network()
