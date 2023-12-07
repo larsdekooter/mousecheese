@@ -1,5 +1,5 @@
 import pygame
-from data import catPositions, cheeseReward, getDistanceReward, rewardNerf, getEfficiencyPenalty
+from data import catPositions, cheeseReward, getDistanceReward, rewardNerf, getEfficiencyPenalty, invalidMovePunishment
 from mouse import Mouse
 import math
 import time
@@ -42,7 +42,7 @@ class Game:
         else:
             reward = getDistanceReward(distance) - getEfficiencyPenalty(distance)
             if self.mouse.noMove:
-                reward = 0
+                reward = invalidMovePunishment
         return reward, done, won
 
     def getDistanceToCheese(self):

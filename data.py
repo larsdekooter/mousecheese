@@ -11,6 +11,7 @@ decayRate = 0.00001
 batchSize = 64  # Adjusted batch size for efficiency
 random = 200
 testLength = 6000
+invalidMovePunishment = -100
 
 def getDistanceReward(distance):
     return 1.02 ** -distance  # Slightly increased reward decay
