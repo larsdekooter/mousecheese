@@ -7,6 +7,7 @@ import data
 import sys
 import traceback
 from datetime import datetime
+import numpy as np
 
 def err(type, value, tb):
     print("Execution date time: {}".format(datetime.now()))
