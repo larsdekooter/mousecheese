@@ -79,6 +79,7 @@ class Network:
         self.maxEpsilon = data.maxEpsilon
         self.minEpsilon = data.minEpsilon
         self.decayRate = data.decayRate
+        self.epsilon = 1
         self.decayStep = 0
         self.aiSteps = 0
         self.randomSteps = 0
@@ -127,13 +128,13 @@ class Network:
         self.trainer.trainStep(state, action, reward, nextState, done)
 
     def getAction(self, state):
-        if self.nGames < data.testLength:
+        if round(self.epsilon, 2) > 0.2:
             self.decayStep+=1
-            epsilon = self.minEpsilon + (self.maxEpsilon - self.minEpsilon) * np.exp(
+            self.epsilon = self.minEpsilon + (self.maxEpsilon - self.minEpsilon) * np.exp(
                 -self.decayRate * self.decayStep
             )
             final_move = [0,0,0,0]
-            if np.random.rand() < epsilon:
+            if np.random.rand() < self.epsilon:
                 move = random.randint(0,3)
                 final_move[move] = 1
                 self.randomSteps +=1

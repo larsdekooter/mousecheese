@@ -19,7 +19,7 @@ sys.excepthook = err
 def train():
     network = Network()
     game = Game()
-    while network.nGames < testLength + 100:
+    while network.epsilon > 0.2:
         epsilon = data.minEpsilon + (data.maxEpsilon - data.minEpsilon) * np.exp(-data.decayRate * network.decayStep)
         state = network.getState(game)
         move = network.getAction(state)
