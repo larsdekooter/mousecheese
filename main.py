@@ -29,9 +29,6 @@ def train():
 
         network.trainShortMemory(state, move, reward, stateNew, done)
         network.remember(state, move, reward, stateNew, done)
-        if network.nGames >= testLength:
-            print(reward)
-
         if done:
             moves = network.moves
             network.moves = [0,0,0,0]
