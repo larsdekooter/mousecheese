@@ -150,10 +150,17 @@ class Network:
                 qValues = self.model(state)
             
             qValuesnp = qValues.numpy()
-            #print("QValues: ", qValuesnp)
             action = torch.argmax(qValues).item()
             final_move = [0,0,0,0]
             final_move[action] = 1
             self.moves[action] += 1
             self.aiSteps +=1
+            if action == 0:
+                print("UP")
+            elif action == 1:
+                print("DOWN")
+            elif action == 2:
+                print("LEFT")
+            elif action == 3:
+                print("RIGHT")
             return final_move

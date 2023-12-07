@@ -18,16 +18,16 @@ class Mouse:
         #         self.cd = False
         #     else:
         #         return
-        if move[0] == 1 and self.y != 0:
+        if move[0] == 1 and self.y != 0: # up
             self.y -= 100
             self.moves +=1
-        elif move[1] == 1 and self.y != 700:
+        elif move[1] == 1 and self.y != 700: #down
             self.y += 100
             self.moves +=1
-        elif move[2] == 1 and self.x != 0:
+        elif move[2] == 1 and self.x != 0: #left
             self.x -=100
             self.moves +=1
-        elif move[3] == 1 and self.x != 700:
+        elif move[3] == 1 and self.x != 700: # right
             self.x += 100
             self.moves +=1
         # else:
