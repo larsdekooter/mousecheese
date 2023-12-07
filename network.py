@@ -58,7 +58,7 @@ class QTrainer:
         for idx in range(len(done)):
             Qnew = reward[idx]
             if not done[idx]:
-                Qnew = reward[idx] + self.gamma * torch.max(self.model(nextState[idx]))
+                Qnew += reward[idx] + self.gamma * torch.max(self.model(nextState[idx]))
             target[idx][torch.argmax(action[idx]).item()] = Qnew
 
         self.optimizer.zero_grad()
