@@ -41,6 +41,8 @@ class Game:
             won = True
         else:
             reward = getDistanceReward(distance) - getEfficiencyPenalty(distance)
+            if self.mouse.noMove:
+                reward = 0
         return reward, done, won
 
     def getDistanceToCheese(self):
