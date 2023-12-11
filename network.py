@@ -128,40 +128,40 @@ class Network:
         self.trainer.trainStep(state, action, reward, nextState, done)
 
     def getAction(self, state):
-        if round(self.epsilon, 2) > 0.2:
-            self.decayStep+=1
-            self.epsilon = self.minEpsilon + (self.maxEpsilon - self.minEpsilon) * np.exp(
-                -self.decayRate * self.decayStep
-            )
-            final_move = [0,0,0,0]
-            if np.random.rand() < self.epsilon:
-                move = random.randint(0,3)
-                final_move[move] = 1
-                self.randomSteps +=1
-            else:
-                state0 = torch.tensor(state, dtype=torch.float)
-                prediction = self.model(state0)
-                move = torch.argmax(prediction).item()
-                final_move[move] = 1
-                self.aiSteps += 1
-            return final_move
+        # if round(self.epsilon, 2) > 0.2:
+        self.decayStep+=1
+        self.epsilon = self.minEpsilon + (self.maxEpsilon - self.minEpsilon) * np.exp(
+            -self.decayRate * self.decayStep
+        )
+        final_move = [0,0,0,0]
+        if np.random.rand() < self.epsilon:
+            move = random.randint(0,3)
+            final_move[move] = 1
+            self.randomSteps +=1
         else:
-            self.model.eval()
-            with torch.no_grad():
-                qValues = self.model(state)
-            
-            qValuesnp = qValues.numpy()
-            action = torch.argmax(qValues).item()
-            final_move = [0,0,0,0]
-            final_move[action] = 1
-            self.moves[action] += 1
-            self.aiSteps +=1
-            if action == 0:
-                print("UP")
-            elif action == 1:
-                print("DOWN")
-            elif action == 2:
-                print("LEFT")
-            elif action == 3:
-                print("RIGHT")
-            return final_move
+            state0 = torch.tensor(state, dtype=torch.float)
+            prediction = self.model(state0)
+            move = torch.argmax(prediction).item()
+            final_move[move] = 1
+            self.aiSteps += 1
+        return final_move
+#        else:
+ #           self.model.eval()
+  #          with torch.no_grad():
+   #             qValues = self.model(state)
+    #        
+     #       qValuesnp = qValues.numpy()
+      #      action = torch.argmax(qValues).item()
+       #     final_move = [0,0,0,0]
+        #    final_move[action] = 1
+         #   self.moves[action] += 1
+          #  self.aiSteps +=1
+           # if action == 0:
+            #    print("UP")
+#            elif action == 1:
+ #               print("DOWN")
+  #          elif action == 2:
+   #             print("LEFT")
+    #        elif action == 3:
+     #           print("RIGHT")
+      #      return final_move
