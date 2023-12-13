@@ -19,7 +19,7 @@ sys.excepthook = err
 def train():
     network = Network()
     game = Game()
-    while network.epsilon > 0.2:
+    while network.epsilon > data.greaterThan:
         epsilon = data.minEpsilon + (data.maxEpsilon - data.minEpsilon) * np.exp(-data.decayRate * network.decayStep)
         state = network.getState(game)
         move = network.getAction(state)
@@ -50,6 +50,22 @@ def train():
             if won or network.nGames % 100 == 0:
                 network.model.save()
             game.gameTime = time()
+    
+    while network.selfGames < 100:
+        state = network.getState(game)
+        move = network.getAIAction(state)
+
+        done, reward, won = game.step(move)
+        stateNew = network.getState(game)
+
+        network.trainShortMemory(state, move, reward, stateNew, done)
+        network.remember(state, move, reward, stateNew, done)
+        if done:
+            moves = network.moves
+            network.moves = [0,0,0,0]
+            game.reset()
+            network.selfGames += 1
+            print("Game", network.selfGames, "Won", won, "Moves", moves)
 
 
 def getMove():

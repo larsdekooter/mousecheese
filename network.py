@@ -84,6 +84,7 @@ class Network:
         self.aiSteps = 0
         self.randomSteps = 0
         self.moves = [0,0,0,0]
+        self.selfGames = 0
 
     def getState(self, game: Game):
         distanceToCheese = game.getDistanceToCheese()
@@ -128,7 +129,7 @@ class Network:
         self.trainer.trainStep(state, action, reward, nextState, done)
 
     def getAction(self, state):
-        if round(self.epsilon, 2) > 0.2:
+        if self.epsilon > data.greaterThan:
             self.decayStep+=1
             self.epsilon = self.minEpsilon + (self.maxEpsilon - self.minEpsilon) * np.exp(
                 -self.decayRate * self.decayStep
@@ -165,3 +166,12 @@ class Network:
             elif action == 3:
                 print("RIGHT")
             return final_move
+    
+    def getAIAction(self, state):
+        state0 = torch.tensor(state, dtype=torch.float)
+        prediction = self.model(state0)
+        move = torch.argmax(prediction).item()
+        finalMove = [0,0,0,0]
+        finalMove[move] = 1
+        self.moves[move] += 1
+        return finalMove
