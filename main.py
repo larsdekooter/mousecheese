@@ -17,6 +17,7 @@ def err(type, value, tb):
 sys.excepthook = err
 
 def train():
+    startTime = time()
     network = Network()
     game = Game()
     while network.epsilon > data.greaterThan:
@@ -50,7 +51,8 @@ def train():
             if won or network.nGames % 100 == 0:
                 network.model.save()
             game.gameTime = time()
-    
+            
+    print(round(time() - startTime, 2))
     while network.selfGames < 100:
         state = network.getState(game)
         move = network.getAIAction(state)
