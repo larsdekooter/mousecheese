@@ -58,8 +58,8 @@ class QTrainer:
         for idx in range(len(done)):
             Qnew = reward[idx]
             if not done[idx]:
-                Qnew += reward[idx] + self.gamma * torch.max(self.model(nextState[idx]))
-            target[idx][torch.argmax(action[idx]).item()] = Qnew
+                Qnew += reward[idx] + self.gamma * torch.min(self.model(nextState[idx]))
+            target[idx][torch.argmin(action[idx]).item()] = Qnew
 
         self.optimizer.zero_grad()
         loss = self.criterion(target, pred)
@@ -142,7 +142,7 @@ class Network:
             else:
                 state0 = torch.tensor(state, dtype=torch.float)
                 prediction = self.model(state0)
-                move = torch.argmax(prediction).item()
+                move = torch.argmin(prediction).item()
                 final_move[move] = 1
                 self.aiSteps += 1
             return final_move
@@ -152,7 +152,7 @@ class Network:
                 qValues = self.model(state)
             
             qValuesnp = qValues.numpy()
-            action = torch.argmax(qValues).item()
+            action = torch.argmin(qValues).item()
             final_move = [0,0,0,0]
             final_move[action] = 1
             self.moves[action] += 1
@@ -170,7 +170,7 @@ class Network:
     def getAIAction(self, state):
         state0 = torch.tensor(state, dtype=torch.float)
         prediction = self.model(state0)
-        move = torch.argmax(prediction).item()
+        move = torch.argmin(prediction).item()
         finalMove = [0,0,0,0]
         finalMove[move] = 1
         self.moves[move] += 1
