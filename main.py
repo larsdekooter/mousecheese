@@ -51,12 +51,14 @@ def train():
             if won or network.nGames % 100 == 0:
                 network.model.save()
             game.gameTime = time()
-            
-    print(round(time() - startTime, 2))
+
+    wehe = round(time() - startTime, 2)
+
+    print(wehe)
     while network.selfGames < 100:
         state = network.getState(game)
         move = network.getAIAction(state)
-
+        print(move, "", wehe)
         done, reward, won = game.step(move)
         stateNew = network.getState(game)
 

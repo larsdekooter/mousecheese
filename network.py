@@ -174,5 +174,4 @@ class Network:
         finalMove = [0,0,0,0]
         finalMove[move] = 1
         self.moves[move] += 1
-        print(finalMove)
         return finalMove
